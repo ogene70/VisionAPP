@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ContratRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string,\Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'valeur_totale'=>['string','required'],
+            'num_contrat'=>['string','required'],
+            'nom_client'=>['string','required'],
+            'prenom_client'=>['string','required'],
+            'categorie'=>['string','required'],
+
+            // 'nom_produit'=>['string','required'],
+            // 'prix'=>['string','required'],
+            // 'type'=>['string','required'],
+            // 'Produit'=>['array','required']
+
+            
+        ];
+    }
+}
