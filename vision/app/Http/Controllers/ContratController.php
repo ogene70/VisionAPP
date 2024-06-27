@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContratDeleteRequest;
 use Illuminate\Http\Request;
 use App\Models\Contrat;
 use Illuminate\Support\Facades\Auth;
@@ -56,12 +57,23 @@ class ContratController extends Controller
     public function UpdateContrats(ContratUpdateRequest $request){
 
         $ToUpdatecontrat=Contrat::find($request->id);
-        $ToUpdatecontrat->valeur_totale=$request->valeur_totale;
-        $ToUpdatecontrat->num_contrat=$request->num_contrat;
-        $ToUpdatecontrat->nom_client=$request->nom_client;
-        $ToUpdatecontrat->prenom_client=$request->prenom_client;
-        $ToUpdatecontrat->categorie=$request->categorie;
+        if (empty($request->valeur_totale)==false) {
+            $ToUpdatecontrat->valeur_totale=$request->valeur_totale;
+        }
+        if (empty($request->num_contrat)==false) {
+            $ToUpdatecontrat->num_contrat=$request->num_contrat;
+                }
+        if (empty($request->nom_client)==false) {
+            $ToUpdatecontrat->nom_client=$request->nom_client;
+        }
+        if (empty($request->prenom_client)==false) {
+            $ToUpdatecontrat->prenom_client=$request->prenom_client;
+        }
+        if (empty($request->categorie)==false) {
+            $ToUpdatecontrat->categorie=$request->categorie;
+        }
         $ToUpdatecontrat->user_id=Auth::user()->id;
+        // $ToUpdatecontrat->updated_at= date('Y-m-d H:i:s');
         $ok=$ToUpdatecontrat->save();
 
         $listeP=$request->Produit;
@@ -78,10 +90,25 @@ class ContratController extends Controller
         $data=Produit_contrat::where('contrat_id','=',$request->id)->get();
     
         if($ok&&$ok2){
+
             return response()->json(["message"=>"Contrat modifié avec succès","datas" =>["infos_contrat"=>$ToUpdatecontrat,"produit"=>$data]], 200);
         } 
        }
+
+
+
+
     public function DeleteContrats(ContratDeleteRequest $request){
-        $ToDeleteContrat=Produit_contrat::with('Contrat')->where("contrat_id","=",$request->id)->delete();
+
+        $ToDeleteProdContrat=Produit_contrat::where("contrat_id","=",$request->id)->get();
+
+    foreach ($ToDeleteProdContrat as $prod) {
+        $prod->delete();
+        
+    }
+        $ToDeleteContrat=Contrat::find($request->id);
+        $ToDeleteContrat->delete();
+        $data=["contrat_deleted"=>$ToDeleteContrat,"prods_contrat_deleted"=>$ToDeleteProdContrat];
+        return response()->json(["message"=>"Contrat supprimé avec succès","datas" =>$data]);
     }
 }
