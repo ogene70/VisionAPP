@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Requests\ContratDeleteRequest;
-use Illuminate\Http\Request;
 use App\Models\Contrat;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ContratSearchRequest;
@@ -62,7 +60,7 @@ class ContratController extends Controller
         }
         if (empty($request->num_contrat)==false) {
             $ToUpdatecontrat->num_contrat=$request->num_contrat;
-                }
+                }   
         if (empty($request->nom_client)==false) {
             $ToUpdatecontrat->nom_client=$request->nom_client;
         }

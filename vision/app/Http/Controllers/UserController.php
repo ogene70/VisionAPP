@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +30,14 @@ class UserController extends Controller
         'user_id' => $user->id
         ]);
     }
- public function ListCollaborateur(){
-    
- }
+ public function ListCollaborateur(UserRequest $request){
+    if (empty($request->search)) {
+        $data = User::with('contrats','commissions')->get();
+        return response()->json(["datas" => "$data"], 200);
+     } else {
+        $data = User::with('produits')->where()->get();
+        return response()->json($data,200);
+     } }
  public function CreateCollaborateur(){
 
  }   

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContratController;
+use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
@@ -28,12 +29,12 @@ Route::middleware('auth:sanctum')->put('/collaborateurs',[UserController::class,
 Route::middleware('auth:sanctum')->delete('/collaborateurs/{id}',[UserController::class,'DeleteCollaborateur']);
 // CONTRATS
 Route::middleware('auth:sanctum')->get('/contrats',[ContratController::class,'ListContrats']);
-Route::middleware('auth:sanctum')->post('/contrats',[ContratController::class,'CreateContrats']);
-Route::middleware('auth:sanctum')->put('/contrats',[ContratController::class,'UpdateContrats']);
-Route::middleware('auth:sanctum')->delete('/contrats',[ContratController::class,'DeleteContrats']);
+Route::middleware('auth:sanctum')->post('/contrats',[ContratController::class,'CreateContrat']);
+Route::middleware('auth:sanctum')->put('/contrats',[ContratController::class,'UpdateContrat']);
+Route::middleware('auth:sanctum')->delete('/contrats',[ContratController::class,'DeleteContrat']);
 //PRODUITS
-// Route::middleware('auth:sanctum')->get('/produits',[ContratController::class,'ListProduits']);
-// Route::middleware('auth:sanctum')->post('/produits',[ContratController::class,'CreateProduit']);
-// Route::middleware('auth:sanctum')->put('/produits',[ContratController::class,'UpdateProduit']);
-// Route::middleware('auth:sanctum')->delete('/produits',[ContratController::class,'DeleteProduit']);
+Route::middleware('auth:sanctum')->get('/produits',[ProduitController::class,'ListProduits']);
+Route::middleware('auth:sanctum')->post('/produits',[ProduitController::class,'CreateProduit']);
+Route::middleware('auth:sanctum')->put('/produits',[ProduitController::class,'UpdateProduit']);
+Route::middleware('auth:sanctum')->delete('/produits',[ProduitController::class,'DeleteProduit']);
 
